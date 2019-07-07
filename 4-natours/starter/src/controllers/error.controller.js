@@ -38,6 +38,9 @@ const handleValidationErrorDB = err => {
   return new AppError(JSON.stringify(message), 400);
 };
 
+const handleJwtError = () =>
+  new AppError('Invalid or expired token. Please signin again.', 401);
+
 /**
  * Send error as response
  *
@@ -100,6 +103,14 @@ exports.handleError = (err, req, res, next) => {
         status,
         isOperational
       } = handleValidationErrorDB(err);
+      error.status = status;
+      error.statusCode = statusCode;
+      error.message = message;
+      error.isOperational = isOperational;
+    }
+    // Handle jwt error
+    if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
+      const { message, statusCode, status, isOperational } = handleJwtError();
       error.status = status;
       error.statusCode = statusCode;
       error.message = message;
