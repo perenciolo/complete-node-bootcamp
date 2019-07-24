@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 const AppError = require('../services/appError');
 
@@ -23,6 +24,11 @@ const userSchema = mongoose.Schema({
   photo: {
     type: String,
     trim: true
+  },
+  role: {
+    type: String,
+    enum: ['user', 'guide', 'lead-guide', 'admin'],
+    default: 'user'
   },
   password: {
     type: String,
@@ -52,7 +58,9 @@ const userSchema = mongoose.Schema({
       message: 'Password and confirmation do not match.'
     }
   },
-  passwordChangedAt: Date
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date
 });
 
 /**
@@ -91,6 +99,21 @@ userSchema.methods.changedPwdAfter = function(jwtTimestamp) {
   }
 
   return false; // Not changed
+};
+
+userSchema.methods.createPwdResetToken = function() {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  // Save securely on DB.
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  // Save for use in 10 minutes.
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 module.exports = mongoose.model('User', userSchema);
