@@ -2,6 +2,7 @@ const express = require('express');
 
 const {
   createUser,
+  deleteMe,
   deleteUser,
   getAllUsers,
   getUser,
@@ -29,6 +30,7 @@ router.patch('/reset-password/:id', resetPassword);
 router.patch('/update-password/:token', authProtect, updatePassword);
 
 router.patch('/updateme', authProtect, updateMe);
+router.delete('/deleteme', authProtect, deleteMe);
 
 router
   .route('/')

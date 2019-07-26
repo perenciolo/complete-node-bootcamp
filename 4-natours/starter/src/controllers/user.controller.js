@@ -2,6 +2,18 @@ const User = require('../models/user.model');
 const catchAsync = require('../services/catchAsync');
 const AppError = require('../services/appError');
 
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+
+  Object.keys(obj).forEach(el => {
+    if (allowedFields.includes(el)) {
+      newObj[el] = obj[el];
+    }
+  });
+
+  return newObj;
+};
+
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
 
@@ -14,7 +26,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateMe = (req, res, next) => {
+exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create an error if user post password data
   if (req.body.password || req.body.passwordConfirm)
     return next(
@@ -23,11 +35,26 @@ exports.updateMe = (req, res, next) => {
         400
       )
     );
-  // 2) Update user document
-  res.json({
-    status: 'success'
+  // 2) Fiter out unwanted field names that are not allowed to be updated.
+  const filteredBody = filterObj(req.body, 'name', 'email');
+  // 3) Update user document
+  const { id } = req.user;
+  const updatedUser = await User.findByIdAndUpdate(id, filteredBody, {
+    new: true,
+    runValidators: true
   });
-};
+
+  res.json({
+    status: 'success',
+    data: { user: updatedUser }
+  });
+});
+
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false });
+
+  res.status(204).json({ status: 'success' });
+});
 
 exports.createUser = (req, res) => {
   res.status(500).json({
