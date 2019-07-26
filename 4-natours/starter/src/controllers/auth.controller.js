@@ -34,6 +34,19 @@ const createAndSendToken = (
   status = 'success'
 ) => {
   const token = signToken(user._id);
+  const cookieOpt = {
+    expires: new Date(Date.now + process.env.JWT_EXPIRES_IN),
+    httpOnly: true
+  };
+
+  // Require https in production.
+  if (process.env.NODE_ENV === 'production') cookieOpt.secure = true;
+
+  res.cookie('jwt', token, cookieOpt);
+
+  // remove fields from output.
+  user.password = undefined;
+  user.active = undefined;
 
   res.status(statusCode).json({
     status,
