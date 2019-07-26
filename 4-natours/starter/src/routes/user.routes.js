@@ -5,13 +5,16 @@ const {
   deleteUser,
   getAllUsers,
   getUser,
-  updateUser
+  updateUser,
+  updateMe
 } = require('../controllers/user.controller');
 const {
+  authProtect,
   forgotPassword,
   resetPassword,
   signin,
-  signup
+  signup,
+  updatePassword
 } = require('../controllers/auth.controller');
 
 // Routes
@@ -22,6 +25,10 @@ router.post('/signup', signup);
 
 router.post('/forgot-password', forgotPassword);
 router.patch('/reset-password/:id', resetPassword);
+
+router.patch('/update-password/:token', authProtect, updatePassword);
+
+router.patch('/updateme', authProtect, updateMe);
 
 router
   .route('/')

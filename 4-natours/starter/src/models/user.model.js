@@ -81,6 +81,14 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  // Ensure that token is created after password changed by subtracting 1s.
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 // Instance Method.
 userSchema.methods.correctPwd = async function(candidatePwd, userPwd) {
   // Compare if passwords match.
