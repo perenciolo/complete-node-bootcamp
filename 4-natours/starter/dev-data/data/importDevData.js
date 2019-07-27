@@ -6,6 +6,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 
 const Tour = require('../../src/models/tour.model');
+const User = require('../../src/models/user.model');
+const Review = require('../../src/models/review.model');
 
 // Configure Database connection URL.
 const DB = process.env.DB_CONNECTION_URL.replace(
@@ -26,8 +28,17 @@ mongoose
 
 // Read JSON File.
 const tours = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, 'tours-simple.json'), 'utf-8')
+  fs.readFileSync(path.resolve(__dirname, 'tours.json'), 'utf-8')
 );
+const users = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, 'users.json'), 'utf-8')
+);
+const reviews = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, 'reviews.json'), 'utf-8')
+);
+
+// Regex to Get Property in JSON
+// /(?:"password":(.*?)")(.*?)(?:")/g
 
 /**
  * Console Colors reference
@@ -67,7 +78,11 @@ const tours = JSON.parse(
 // Import Data Into DB.
 const importData = async () => {
   try {
-    await Tour.create(tours);
+    await Promise.all([
+      Tour.create(tours),
+      User.create(users),
+      Review.create(reviews)
+    ]);
     console.log('\x1b[5m\x1b[32m', 'Data', 'successfully', 'loaded!');
     process.exit();
   } catch (error) {
@@ -80,7 +95,11 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     // DeleteMany without conditions delete all data from collection.
-    await Tour.deleteMany();
+    await Promise.all([
+      Tour.deleteMany(),
+      User.deleteMany(),
+      Review.deleteMany()
+    ]);
     console.log('\x1b[5m\x1b[31m', 'Data', 'successfully', 'deleted!');
     process.exit();
   } catch (error) {

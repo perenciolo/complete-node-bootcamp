@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
+// const User = require('./user.model');
+
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -32,7 +34,8 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       default: 4.5,
       min: [1, 'Rating must be at least 1.0'],
-      max: [5, 'Rating must be below 5.0']
+      max: [5, 'Rating must be below 5.0'],
+      set: val => Math.round(val * 10) / 10 // 4.666 => 46.6 => 47 => 47/10 => 4.7
     },
     ratingQuantity: { type: Number, default: 0 },
     price: {
@@ -73,7 +76,32 @@ const tourSchema = new mongoose.Schema(
     secretTour: {
       type: Boolean,
       default: false
-    }
+    },
+    startLocation: {
+      // GeoJSON
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point']
+      },
+      coordinates: [Number],
+      address: String,
+      description: String
+    },
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point']
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number
+      }
+    ],
+    guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
   },
   {
     /**
@@ -85,6 +113,10 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+tourSchema.index({ price: 1, ratingAverage: -1 });
+tourSchema.index({ slug: 1 });
+tourSchema.index({ startLocation: '2dsphere' });
+
 /**
  * Virtual properties are generaly simple convertions that
  * don't need to be persisted in mongodb.
@@ -92,6 +124,13 @@ const tourSchema = new mongoose.Schema(
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 }); // based on duration in days divided by 7.
+
+// Virtual populate assoc _id to tour in reviews
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id'
+});
 
 /**
  * Document Middleware:
@@ -109,6 +148,14 @@ tourSchema.pre('save', function(next) {
   next();
 });
 
+// tourSchema.pre('save', async function(next) {
+//   const guidesPromises = this.guides.map(
+//     async id => await User.findOne({ _id: id })
+//   );
+//   this.guides = await Promise.all(guidesPromises);
+//   next();
+// });
+
 /**
  * Query middleware.
  *
@@ -125,21 +172,30 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -role'
+  });
+
+  next();
+});
+
 /**
  * Aggregation Middleware.
  *
  * It executes for all aggregation queries.
  */
-tourSchema.pre('aggregate', function(next) {
-  /**
-   * Filter only no secret tours by unshifting another
-   * $match to the pipeline.
-   *
-   * this = current aggregation object.
-   */
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+// tourSchema.pre('aggregate', function(next) {
+//   /**
+//    * Filter only no secret tours by unshifting another
+//    * $match to the pipeline.
+//    *
+//    * this = current aggregation object.
+//    */
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
 
-  next();
-});
+//   next();
+// });
 
 module.exports = mongoose.model('Tour', tourSchema);

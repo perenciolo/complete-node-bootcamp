@@ -1,21 +1,105 @@
 _type: export
 __export_format: 4
-__export_date: 2019-07-26T01:53:21.452Z
+__export_date: 2019-07-27T17:49:51.531Z
 __export_source: insomnia.desktop.app:v6.5.4
 resources:
-  - _id: req_2217515e5fcf4685a40304d8fe594d9d
+  - _id: req_979d0d73139a4dd2806c4f7e1d514033
     authentication:
-      token: "{{ token  }}"
+      token: "{{ user_token  }}"
       type: bearer
     body: {}
-    created: 1562440023215
-    description: ""
+    created: 1564190750100
+    description: |-
+      Get all reviews on data base.
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers: []
     isPrivate: false
-    metaSortKey: -1562440023215
+    metaSortKey: -1562440023202.5
     method: GET
-    modified: 1562633845422
-    name: Get all tours
+    modified: 1564249008790
+    name: Get all  reviews
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[lte]
+        value: "5"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[gt]
+        value: "1000"
+      - id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ""
+        value: ""
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - disabled: true
+        id: pair_bf3623bb6bab431185d8775a733522c0
+        name: rating[gte]
+        value: "4"
+    parentId: fld_6c7a1152c5944137831650e8c9044a00
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/reviews"
+    _type: request
+  - _id: fld_6c7a1152c5944137831650e8c9044a00
+    created: 1564190741657
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1564190741657
+    modified: 1564202067887
+    name: REVIEWS
+    parentId: wrk_42b649939d8449939a51166cae1acfe0
+    _type: request_group
+  - _id: wrk_42b649939d8449939a51166cae1acfe0
+    created: 1562439915575
+    description: ""
+    modified: 1562439915575
+    name: Natours
+    parentId: null
+    _type: workspace
+  - _id: req_1207a26aa2d240278360bdc506a713f5
+    authentication:
+      token: "{{ user_token  }}"
+      type: bearer
+    body: {}
+    created: 1564231235326
+    description: |-
+      Get single review given an id. 
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562440023199.375
+    method: GET
+    modified: 1564248981724
+    name: Get review
     parameters:
       - disabled: true
         id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
@@ -51,6 +135,269 @@ resources:
       - id: pair_bf3623bb6bab431185d8775a733522c0
         name: ""
         value: ""
+    parentId: fld_6c7a1152c5944137831650e8c9044a00
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/reviews/5d3bab6e5cc0571f4abb0320"
+    _type: request
+  - _id: req_6597b440ff4547b3b8c5fbb8c8d45fc3
+    authentication:
+      token: "{{ user_token  }}"
+      type: bearer
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"user":"5d3a613ab77efb3a5b57b408",
+        	"tour": "5c88fa8cf4afda39709c2955",
+        	"review": "Amazing",
+        	"rating": "5"
+        }
+    created: 1564191097088
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers:
+      - id: pair_9529a23764bd4366869d7059095586a3
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1562440023196.25
+    method: POST
+    modified: 1564249153344
+    name: Create  review
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[lte]
+        value: "5"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[gt]
+        value: "1000"
+      - id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ""
+        value: ""
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - id: pair_bf3623bb6bab431185d8775a733522c0
+        name: ""
+        value: ""
+    parentId: fld_6c7a1152c5944137831650e8c9044a00
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/reviews"
+    _type: request
+  - _id: req_212cd33b2f674b9e8530bfc1a1209116
+    authentication:
+      token: "{{ user_token  }}"
+      type: bearer
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"rating": "2.32"
+        }
+    created: 1564229150584
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers:
+      - id: pair_61e94dcc26594f239c5a8821fc6a866d
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1562440023171.25
+    method: PATCH
+    modified: 1564249181535
+    name: Update review
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[lte]
+        value: "5"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[gt]
+        value: "1000"
+      - id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ""
+        value: ""
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - id: pair_bf3623bb6bab431185d8775a733522c0
+        name: ""
+        value: ""
+    parentId: fld_6c7a1152c5944137831650e8c9044a00
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/reviews/5d3c7051c8e61b5164c92ad1"
+    _type: request
+  - _id: req_5fe31b21609942daae9252677251d385
+    authentication:
+      token: "{{ user_token  }}"
+      type: bearer
+    body: {}
+    created: 1564227929585
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562440023165
+    method: DELETE
+    modified: 1564249198235
+    name: Delete review
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[lte]
+        value: "5"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[gt]
+        value: "1000"
+      - id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ""
+        value: ""
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - id: pair_bf3623bb6bab431185d8775a733522c0
+        name: ""
+        value: ""
+    parentId: fld_6c7a1152c5944137831650e8c9044a00
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/reviews/5d3c6a1d218f0a2ae463c404"
+    _type: request
+  - _id: req_2217515e5fcf4685a40304d8fe594d9d
+    authentication: {}
+    body: {}
+    created: 1562440023215
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562440023215
+    method: GET
+    modified: 1564249242879
+    name: Get all tours
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[gte]
+        value: "10"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[lt]
+        value: "1000"
+      - disabled: true
+        id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ratingAverage[gt]
+        value: "3"
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - disabled: true
+        id: pair_bf3623bb6bab431185d8775a733522c0
+        name: ""
+        value: ""
     parentId: fld_1bc0c4a269ff472988dfcc9e94cb0a12
     settingDisableRenderRequestBody: false
     settingEncodeUrl: true
@@ -69,23 +416,21 @@ resources:
     name: TOURS
     parentId: wrk_42b649939d8449939a51166cae1acfe0
     _type: request_group
-  - _id: wrk_42b649939d8449939a51166cae1acfe0
-    created: 1562439915575
-    description: ""
-    modified: 1562439915575
-    name: Natours
-    parentId: null
-    _type: workspace
   - _id: req_17e64632cd7f41d495e0f4ae449dc503
     authentication: {}
     body: {}
     created: 1562474178468
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers: []
     isPrivate: false
     metaSortKey: -1562440023190
     method: GET
-    modified: 1562514009055
+    modified: 1564249268169
     name: Get top 5 cheap
     parameters:
       - disabled: true
@@ -134,12 +479,17 @@ resources:
     authentication: {}
     body: {}
     created: 1562476565002
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers: []
     isPrivate: false
     metaSortKey: -1562440023183.75
     method: GET
-    modified: 1562476589222
+    modified: 1564249283773
     name: Get tour stats
     parameters:
       - disabled: true
@@ -184,16 +534,48 @@ resources:
     settingStoreCookies: true
     url: "{{ api  }}/tours/tour-stats"
     _type: request
-  - _id: req_90abb34665234246ac3b4546625e364c
+  - _id: req_f95a6c6db81447a9bb0e486b5ea7431a
     authentication: {}
     body: {}
+    created: 1562442643826
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562440023179.0625
+    method: GET
+    modified: 1564249306967
+    name: Get single tour
+    parameters: []
+    parentId: fld_1bc0c4a269ff472988dfcc9e94cb0a12
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/tours/5d3c6721ae4b04115c4241b6"
+    _type: request
+  - _id: req_90abb34665234246ac3b4546625e364c
+    authentication:
+      token: "{{ token  }}"
+      type: bearer
+    body: {}
     created: 1562502519295
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers: []
     isPrivate: false
     metaSortKey: -1562440023174.375
     method: GET
-    modified: 1562502553186
+    modified: 1564249324432
     name: Get Monthly Plan
     parameters:
       - disabled: true
@@ -238,36 +620,35 @@ resources:
     settingStoreCookies: true
     url: "{{ api  }}/tours/monthly-plan/2021"
     _type: request
-  - _id: req_f95a6c6db81447a9bb0e486b5ea7431a
-    authentication: {}
-    body: {}
-    created: 1562442643826
-    description: ""
-    headers: []
-    isPrivate: false
-    metaSortKey: -1562440023165
-    method: GET
-    modified: 1562514117414
-    name: Get single tour
-    parameters: []
-    parentId: fld_1bc0c4a269ff472988dfcc9e94cb0a12
-    settingDisableRenderRequestBody: false
-    settingEncodeUrl: true
-    settingRebuildPath: true
-    settingSendCookies: true
-    settingStoreCookies: true
-    url: "{{ api  }}/tours/5d220d50843f03b8958dad6c"
-    _type: request
   - _id: req_d16be8f8cdaa484aa21126c0803e61c4
-    authentication: {}
+    authentication:
+      token: "{{ token  }}"
+      type: bearer
     body:
       mimeType: application/json
-      text: |-
+      text: >-
         {
-            "name": "Sant"
+            "name": "A Familia camundongo",
+            "duration": 1,
+            "maxGroupSize": 1,
+            "difficulty": "medium",
+            "price": 1497,
+        		"imageCover":  "Parksa-camundongo.jpg",
+            "summary": "Breathing in Nature in America's most spectacular National Parksa-camundongo.jpg",
+        		"ratingsAverage": 4,
+        		"guides": [
+        			"5d3a613ab77efb3a5b57b408",
+        			"5d3a6215b1f49d3b2408eb77",
+        			"5d37b189a8f4e86136010bcc"
+        		]
           }
     created: 1562440040724
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers:
       - id: pair_0f4b59f1b4fd452faadb594bccdcb2f8
         name: Content-Type
@@ -275,7 +656,7 @@ resources:
     isPrivate: false
     metaSortKey: -1562440023115
     method: POST
-    modified: 1562521375455
+    modified: 1564249342591
     name: Create new Tour
     parameters: []
     parentId: fld_1bc0c4a269ff472988dfcc9e94cb0a12
@@ -287,23 +668,34 @@ resources:
     url: "{{ api  }}/tours"
     _type: request
   - _id: req_c32ce91562d34d9e8fd06f264fce803a
-    authentication: {}
+    authentication:
+      token: "{{ token  }}"
+      type: bearer
     body:
       mimeType: application/json
       text: |-
         {
-        	"ratingAverage": 4.27
+        	"guides": [
+        			"5d3a613ab77efb3a5b57b408",
+        			"5d3a6215b1f49d3b2408eb77",
+        			"5d37b189a8f4e86136010bcc"
+        		]
         }
     created: 1562444294998
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers:
       - id: pair_0f4b59f1b4fd452faadb594bccdcb2f8
         name: Content-Type
         value: application/json
     isPrivate: false
     metaSortKey: -1562440023065
-    method: PUT
-    modified: 1562513833758
+    method: PATCH
+    modified: 1564249355991
     name: Update Tour
     parameters: []
     parentId: fld_1bc0c4a269ff472988dfcc9e94cb0a12
@@ -312,7 +704,7 @@ resources:
     settingRebuildPath: true
     settingSendCookies: true
     settingStoreCookies: true
-    url: "{{ api  }}/tours/5d2211936da721bb3b9b0cca"
+    url: "{{ api  }}/tours/5d3c5480a3df892b488eac8d"
     _type: request
   - _id: req_ee5857c4434f409f9ffa7c87f84e267a
     authentication:
@@ -321,12 +713,17 @@ resources:
       type: bearer
     body: {}
     created: 1562444890566
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers: []
     isPrivate: false
     metaSortKey: -1562440023015
     method: DELETE
-    modified: 1563931063789
+    modified: 1564249376434
     name: Delete Tour
     parameters: []
     parentId: fld_1bc0c4a269ff472988dfcc9e94cb0a12
@@ -335,19 +732,296 @@ resources:
     settingRebuildPath: true
     settingSendCookies: true
     settingStoreCookies: true
-    url: "{{ api  }}/tours/5d21642475b71d93bd333e8a"
+    url: "{{ api  }}/tours/5d3c5480a3df892b488eac8d"
     _type: request
-  - _id: req_c3a69f9851ef42a299e1d0a75a4ca5a7
+  - _id: req_c8ec5926ffae4d758047cd6cb5abcfdf
     authentication: {}
     body: {}
-    created: 1562447112635
-    description: ""
+    created: 1564243045394
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers: []
     isPrivate: false
-    metaSortKey: -1562447112635
+    metaSortKey: -1562440023230.2344
     method: GET
-    modified: 1562447143840
-    name: Get All
+    modified: 1564249383980
+    name: Get near tours
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: -price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[lte]
+        value: "5"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[gt]
+        value: "1000"
+      - id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ""
+        value: ""
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - id: pair_bf3623bb6bab431185d8775a733522c0
+        name: ""
+        value: ""
+    parentId: fld_60e166aad5284d28ab7f6be776a66c8d
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/tours/tours-within/40/center/36.110904,-115.172652/unit/mi"
+    _type: request
+  - _id: fld_60e166aad5284d28ab7f6be776a66c8d
+    created: 1564248326216
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1562440022990
+    modified: 1564248331427
+    name: TOURS GEOLOCATION
+    parentId: fld_1bc0c4a269ff472988dfcc9e94cb0a12
+    _type: request_group
+  - _id: req_8bbd8a526bd0474f8ba08728205e33fc
+    authentication: {}
+    body: {}
+    created: 1564247190875
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562440023180.2344
+    method: GET
+    modified: 1564249392113
+    name: Get distances to tours from point
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: -price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[lte]
+        value: "5"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[gt]
+        value: "1000"
+      - id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ""
+        value: ""
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - id: pair_bf3623bb6bab431185d8775a733522c0
+        name: ""
+        value: ""
+    parentId: fld_60e166aad5284d28ab7f6be776a66c8d
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/tours/distances/36.110904,-115.172652/unit/km"
+    _type: request
+  - _id: req_afe7a4b376164c4cbab87ba425ea99fe
+    authentication:
+      token: "{{ user_token  }}"
+      type: bearer
+    body: {}
+    created: 1564232451360
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562440023197.8125
+    method: GET
+    modified: 1564249401915
+    name: Get all reviews on Tour
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[lte]
+        value: "5"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[gt]
+        value: "1000"
+      - id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ""
+        value: ""
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - id: pair_bf3623bb6bab431185d8775a733522c0
+        name: ""
+        value: ""
+    parentId: fld_bafa9894d9f84c3596f7502d695910df
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/tours/5c88fa8cf4afda39709c2955/reviews"
+    _type: request
+  - _id: fld_bafa9894d9f84c3596f7502d695910df
+    created: 1564235403505
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1562440022965
+    modified: 1564248303606
+    name: TOURS REVIEWS
+    parentId: fld_1bc0c4a269ff472988dfcc9e94cb0a12
+    _type: request_group
+  - _id: req_2d0da4f4b12f4d9e9bf054faf0051eb8
+    authentication:
+      token: "{{ user_token  }}"
+      type: bearer
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"review": "Terible!",
+        	"rating": "4.667"
+        }
+    created: 1564235274493
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers:
+      - id: pair_558932ce42134dcea2ce05930d1e20d5
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1562440023147.8125
+    method: POST
+    modified: 1564249408987
+    name: Create reviews on Tour
+    parameters:
+      - disabled: true
+        id: pair_fd1c7a3c0e154ff9b3b3116adf7424ea
+        name: difficulty
+        value: easy
+      - disabled: true
+        id: pair_01f1393395f84d279c0f4f7fd89c7a14
+        name: page
+        value: "4"
+      - disabled: true
+        id: pair_ef45d64dfa0f4bb198171c1b0685d847
+        name: limit
+        value: "3"
+      - disabled: true
+        id: pair_2aa59be87a4e40419d2c616918c3d773
+        name: sort
+        value: price,-ratingAverage
+      - disabled: true
+        id: pair_d62ae6fcb99a4529bbeb6a44457b6ba1
+        name: duration[lte]
+        value: "5"
+      - disabled: true
+        id: pair_c27ed905fdfd442b9a7d73ba3a8fb48e
+        name: price[gt]
+        value: "1000"
+      - id: pair_e76c0d49e4234e2ab4cf6c2f4e2e7732
+        name: ""
+        value: ""
+      - disabled: true
+        id: pair_4c6faf5a3e794a338db366b94d4a1694
+        name: fields
+        value: name,id,imageCover
+      - id: pair_bf3623bb6bab431185d8775a733522c0
+        name: ""
+        value: ""
+    parentId: fld_bafa9894d9f84c3596f7502d695910df
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/tours/5d3c6721ae4b04115c4241b6/reviews"
+    _type: request
+  - _id: req_a24d400adb3843cfbd1b46ca0428feee
+    authentication:
+      disabled: false
+      token: "{{ token  }}"
+      type: bearer
+    body: {}
+    created: 1564233455269
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562445367973.0469
+    method: GET
+    modified: 1564249414495
+    name: Get Me
     parameters: []
     parentId: fld_27a949e48f8645d0a5703728ff10fa10
     settingDisableRenderRequestBody: false
@@ -355,7 +1029,7 @@ resources:
     settingRebuildPath: true
     settingSendCookies: true
     settingStoreCookies: true
-    url: "{{ api  }}/users"
+    url: "{{ api  }}/users/me"
     _type: request
   - _id: fld_27a949e48f8645d0a5703728ff10fa10
     created: 1562447093101
@@ -379,7 +1053,12 @@ resources:
         	"role": "admin"
         }
     created: 1564102636164
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers:
       - id: pair_17bd402e2b3349408a552000db68af8f
         name: Content-Type
@@ -387,8 +1066,8 @@ resources:
     isPrivate: false
     metaSortKey: -1562443678697.1875
     method: PATCH
-    modified: 1564104807246
-    name: Update Current User Data
+    modified: 1564249421013
+    name: Update Me
     parameters: []
     parentId: fld_27a949e48f8645d0a5703728ff10fa10
     settingDisableRenderRequestBody: false
@@ -404,13 +1083,18 @@ resources:
       type: bearer
     body: {}
     created: 1564105324507
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers: []
     isPrivate: false
-    metaSortKey: -1562443623311.0938
+    metaSortKey: -1562443664850.664
     method: DELETE
-    modified: 1564105439160
-    name: Delete Current User
+    modified: 1564249430838
+    name: Delete Me
     parameters: []
     parentId: fld_27a949e48f8645d0a5703728ff10fa10
     settingDisableRenderRequestBody: false
@@ -420,16 +1104,54 @@ resources:
     settingStoreCookies: true
     url: "{{ api  }}/users/deleteme"
     _type: request
-  - _id: req_2ed8df25731749de983c021029c03d81
-    authentication: {}
+  - _id: req_c3a69f9851ef42a299e1d0a75a4ca5a7
+    authentication:
+      token: "{{ token  }}"
+      type: bearer
     body: {}
-    created: 1562450098071
-    description: ""
+    created: 1562447112635
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers: []
     isPrivate: false
-    metaSortKey: -1562443567925
+    metaSortKey: -1562443656196.587
     method: GET
-    modified: 1564102905944
+    modified: 1564249437192
+    name: Get All
+    parameters:
+      - disabled: true
+        id: pair_7aaacb92bc5445a99ec46115b4cf8198
+        name: role
+        value: admin
+    parentId: fld_27a949e48f8645d0a5703728ff10fa10
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/users/"
+    _type: request
+  - _id: req_2ed8df25731749de983c021029c03d81
+    authentication:
+      token: "{{ token  }}"
+      type: bearer
+    body: {}
+    created: 1562450098071
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562443647542.5098
+    method: GET
+    modified: 1564249443387
     name: Get One
     parameters: []
     parentId: fld_27a949e48f8645d0a5703728ff10fa10
@@ -438,7 +1160,70 @@ resources:
     settingRebuildPath: true
     settingSendCookies: true
     settingStoreCookies: true
-    url: "{{ api  }}/users/5d37adc5f8048f611a130e54"
+    url: "{{ api  }}/users/5d3c4ff603ed0358e95ddc66"
+    _type: request
+  - _id: req_b386ac495a4d4464a66e0fd152be7179
+    authentication:
+      token: "{{ token  }}"
+      type: bearer
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Índio Chiquinha",
+        	"role": "admin"
+        }
+    created: 1564228977492
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers:
+      - id: pair_17bd402e2b3349408a552000db68af8f
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1562443630234.3555
+    method: PATCH
+    modified: 1564249448113
+    name: Update User
+    parameters: []
+    parentId: fld_27a949e48f8645d0a5703728ff10fa10
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/users/5d3b9c3fa889e07fbd3d6a51"
+    _type: request
+  - _id: req_26a77dec220d46adb6deea8c68013610
+    authentication:
+      token: "{{ token  }}"
+      type: bearer
+    body: {}
+    created: 1564228117670
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
+    headers: []
+    isPrivate: false
+    metaSortKey: -1562443595618.0469
+    method: DELETE
+    modified: 1564249453286
+    name: Delete User
+    parameters: []
+    parentId: fld_27a949e48f8645d0a5703728ff10fa10
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ api  }}/users/5d37b02aa8f4e86136010bca"
     _type: request
   - _id: req_e13720044eae419a9c692c3495107e1f
     authentication: {}
@@ -446,14 +1231,19 @@ resources:
       mimeType: application/json
       text: |-
         {
-        	"role": "lead-guide",
-        	"name": "Lead",
-        	"email": "lead@jonas.io",
-        	"password": "#123Oliveira4",
-        	"passwordConfirm": "#123Oliveira4"
+        	"role": "user",
+        	"name": "Anonymous",
+        	"email": "anon@jonas.io",
+        	"password": "{{ pwd  }}",
+        	"passwordConfirm": "{{ pwd  }}"
         }
     created: 1562530010301
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers:
       - id: pair_17bd402e2b3349408a552000db68af8f
         name: Content-Type
@@ -461,7 +1251,7 @@ resources:
     isPrivate: false
     metaSortKey: -1562445340280
     method: POST
-    modified: 1564102816812
+    modified: 1564249458056
     name: Signup
     parameters: []
     parentId: fld_2ba8904ee09e41d59caff45f1799b18c
@@ -478,8 +1268,8 @@ resources:
     environment: {}
     environmentPropertyOrder: null
     metaSortKey: -1562443567875
-    modified: 1564102843225
-    name: Auth
+    modified: 1564233994226
+    name: AUTH
     parentId: fld_27a949e48f8645d0a5703728ff10fa10
     _type: request_group
   - _id: req_caa610bba53f4cf989bf6dcc8226e704
@@ -488,11 +1278,16 @@ resources:
       mimeType: application/json
       text: |-
         {
-        	"email": "anon2@jonas.io",
-        	"password": "#123Oliveira4"
+        	"email": "steve@example.com",
+        	"password": "{{ pwd  }}"
         }
     created: 1562533642464
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers:
       - id: pair_17bd402e2b3349408a552000db68af8f
         name: Content-Type
@@ -500,7 +1295,7 @@ resources:
     isPrivate: false
     metaSortKey: -1562445340230
     method: POST
-    modified: 1564102819298
+    modified: 1564249465270
     name: Signin
     parameters: []
     parentId: fld_2ba8904ee09e41d59caff45f1799b18c
@@ -520,7 +1315,12 @@ resources:
         	"email": "anon2@jonas.io"
         }
     created: 1563932386516
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers:
       - id: pair_17bd402e2b3349408a552000db68af8f
         name: Content-Type
@@ -528,7 +1328,7 @@ resources:
     isPrivate: false
     metaSortKey: -1562445340205
     method: POST
-    modified: 1564102829848
+    modified: 1564249470177
     name: Forgot Password
     parameters: []
     parentId: fld_2ba8904ee09e41d59caff45f1799b18c
@@ -548,7 +1348,12 @@ resources:
         	"email": "anon2@jonas.io"
         }
     created: 1563933812822
-    description: ""
+    description: |-
+      {% request 'name', '', 0 %}
+
+      Parent: {% request 'folder', '', 0 %}
+
+      `{% request 'url', '', 0 %}`
     headers:
       - id: pair_17bd402e2b3349408a552000db68af8f
         name: Content-Type
@@ -556,7 +1361,7 @@ resources:
     isPrivate: false
     metaSortKey: -1562445340180
     method: PATCH
-    modified: 1564102827728
+    modified: 1564249476700
     name: Reset Password
     parameters: []
     parentId: fld_2ba8904ee09e41d59caff45f1799b18c
@@ -579,9 +1384,18 @@ resources:
     parentId: wrk_42b649939d8449939a51166cae1acfe0
     _type: environment
   - _id: jar_a39ba295399d97c574209128dc18a62b06acf784
-    cookies: []
+    cookies:
+      - creation: 2019-07-26T02:11:07.546Z
+        domain: localhost
+        hostOnly: true
+        httpOnly: true
+        id: "10482640158535905"
+        key: jwt
+        lastAccessed: 2019-07-27T17:28:55.975Z
+        path: /
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOGEyMWQwMmY4ZmI4MTRiNTZmYTE4OSIsImlhdCI6MTU2NDI0ODUzNSwiZXhwIjoxNTY0MzM0OTM1fQ.rYq4XDGZT7c9vE_PL3A8rwyG9HUpkkTsrxefePvxDDY
     created: 1562439915685
-    modified: 1562439915684
+    modified: 1564248535976
     name: Default Jar
     parentId: wrk_42b649939d8449939a51166cae1acfe0
     _type: cookie_jar
@@ -590,14 +1404,22 @@ resources:
     created: 1562439937678
     data:
       api: http://localhost:3001/api/v1
-      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkMzdiMTFkYThmNGU4NjEzNjAxMGJjYiIsImlhdCI6MTU2NDEwMjU1NSwiZXhwIjoxNTY0MTg4OTU1fQ.AD5kPrp0qgPPEoQkDawHhPztgF4L0x3TIWzIAsM7r2U
+      guide_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOGExZjI5MmY4ZmI4MTRiNTZmYTE4NCIsImlhdCI6MTU2NDIzNzgyMCwiZXhwIjoxNTY0MzI0MjIwfQ.PdkGJeQlIBcxQ_1pQ2SvWOsGPtClInCgPIbNiJp9Zmk
+      lead_guide_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOGEyMWQwMmY4ZmI4MTRiNTZmYTE4OSIsImlhdCI6MTU2NDI0NDk0NiwiZXhwIjoxNTY0MzMxMzQ2fQ.5ZgAasMVZbrVFY-SRzP4c3Z4ly4nm-quavI4IUEWFjg
+      pwd: "#123Oliveira4"
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOGExZDViMDE5MGIyMTQzNjBkYzA1NyIsImlhdCI6MTU2NDIzNzc1NywiZXhwIjoxNTY0MzI0MTU3fQ.lmYu0pf0Xqyk_U5sOUvsEMJvkHNOUe1WyomDIZMdweE
+      user_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOGExZWM2MmY4ZmI4MTRiNTZmYTE4MyIsImlhdCI6MTU2NDIzNzg3MywiZXhwIjoxNTY0MzI0MjczfQ.efL5ipJ-PM12_Rv00Jsp2NF-tGSIcYIWWtcEe1d9XSM
     dataPropertyOrder:
       "&":
         - api
         - token
+        - user_token
+        - guide_token
+        - lead_guide_token
+        - pwd
     isPrivate: false
     metaSortKey: 1562439937678
-    modified: 1564102587047
+    modified: 1564248383993
     name: Natours ENV
     parentId: env_a39ba295399d97c574209128dc18a62b06acf784
     _type: environment

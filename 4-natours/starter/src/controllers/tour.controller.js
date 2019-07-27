@@ -1,7 +1,13 @@
 const Tour = require('../models/tour.model');
-const ApiFeatures = require('../services/apiFeatures');
 const catchAsync = require('../services/catchAsync');
 const AppError = require('../services/appError');
+const {
+  createOne,
+  deleteOne,
+  getAll,
+  getOne,
+  updateOne
+} = require('./handler.factory');
 
 exports.aliasTopTours = (req, res, next) => {
   // Create Custom field that returns top 5 cheaper destiny.
@@ -15,37 +21,16 @@ exports.aliasTopTours = (req, res, next) => {
   next();
 };
 
-exports.getAllTours = catchAsync(async (req, res, next) => {
-  // Build the query.
-  const features = new ApiFeatures(Tour.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+/**
+ * @param {Tour}
+ */
+exports.getAllTours = getAll(Tour);
 
-  // Execute the query.
-  const data = await features.query;
-
-  // Send response.
-  res.json({
-    status: 'success',
-    results: data.length,
-    data
-  });
-});
-
-exports.getTour = catchAsync(async (req, res, next) => {
-  const data = await Tour.findOne({ _id: req.params.id });
-
-  if (!data) {
-    return next(new AppError('Document not found', 404));
-  }
-
-  res.json({
-    status: 'success',
-    data
-  });
-});
+/**
+ * @param {Tour}
+ * @param {object}
+ */
+exports.getTour = getOne(Tour, { path: 'reviews' });
 
 exports.getTourStats = catchAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([
@@ -78,6 +63,90 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
     data: {
       stats
     }
+  });
+});
+
+exports.geoMetadataValidation = (req, res, next) => {
+  const { latlng, unit = 'km' } = req.params;
+
+  if (!latlng) return next(new AppError('Lat,Long is required', 400));
+
+  const [lat, lng] = latlng.split(',');
+
+  if (!lat || !lng)
+    return next(
+      new AppError(
+        'Please provide the latitude and longitude in the format: lat,lng.',
+        400
+      )
+    );
+
+  if (unit !== 'km' && unit !== 'mi')
+    return next(
+      new AppError(
+        'Please provide the distance in kilometers or Milesin the format: km or mi.',
+        400
+      )
+    );
+
+  // Set desired params.
+  req.params.lat = lat;
+  req.params.lng = lng;
+  req.params.unit = unit;
+
+  next();
+};
+
+/**
+ * Needs to come after geoMetadataValidation middleware.
+ */
+exports.getToursWithin = catchAsync(async (req, res, next) => {
+  // /tours-within/:distance/center/:latlng/unit/:unit
+  const { distance, lat, lng, unit } = req.params;
+
+  if (!distance) return next(new AppError('Distance is required', 400));
+
+  // define earth radius given the unit.
+  const earthRad = unit === 'mi' ? 3963.2 : 6378.1;
+  // define radius in radians.
+  const radius = distance / earthRad;
+
+  const data = await Tour.find({
+    startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
+  });
+
+  res.json({
+    status: 'success',
+    results: data.length,
+    data: { data }
+  });
+});
+
+exports.getDistances = catchAsync(async (req, res, next) => {
+  const { distance, lat, lng, unit } = req.params;
+
+  // Calculate multiplier given unit.
+  const multiplier = unit === 'km' ? 0.001 : 0.000621371;
+
+  const data = await Tour.aggregate([
+    {
+      $geoNear: {
+        near: { type: 'Point', coordinates: [+lng, +lat] },
+        distanceField: 'distance',
+        distanceMultiplier: multiplier
+      }
+    },
+    {
+      $project: {
+        distance: 1,
+        name: 1
+      }
+    }
+  ]);
+
+  res.json({
+    status: 'success',
+    data: { data }
   });
 });
 
@@ -124,37 +193,17 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createTour = catchAsync(async (req, res, next) => {
-  const newTour = await Tour.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    data: {
-      tour: newTour
-    }
-  });
-});
+/**
+ * @param {Tour}
+ */
+exports.createTour = createOne(Tour);
 
-exports.updateTour = catchAsync(async (req, res, next) => {
-  const data = await Tour.findOneAndUpdate({ _id: req.params.id }, req.body, {
-    new: true
-  });
+/**
+ * @param {Tour}
+ */
+exports.updateTour = updateOne(Tour);
 
-  if (!data) {
-    return next(new AppError('Document not found', 404));
-  }
-
-  res.json({
-    status: 'success',
-    data
-  });
-});
-
-exports.deleteTour = catchAsync(async (req, res, next) => {
-  const data = await Tour.findOneAndDelete({ _id: req.params.id });
-
-  if (!data) {
-    return next(new AppError('Document not found', 404));
-  }
-
-  res.send(204);
-});
+/**
+ * @param {Tour}
+ */
+exports.deleteTour = deleteOne(Tour);

@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const catchAsync = require('../services/catchAsync');
 const AppError = require('../services/appError');
+const { deleteOne, getAll, getOne, updateOne } = require('./handler.factory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -14,17 +15,11 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
 
-  res.json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users
-    }
-  });
-});
+  next();
+};
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create an error if user post password data
@@ -56,30 +51,24 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   res.status(204).json({ status: 'success' });
 });
 
-exports.createUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    error: 'Undefined route'
-  });
-};
+/**
+ * @param {User}
+ */
+exports.getAllUsers = getAll(User);
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    error: 'Undefined route'
-  });
-};
+/**
+ * @param {User}
+ */
+exports.getUser = getOne(User);
 
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    error: 'Undefined route'
-  });
-};
+/**
+ * Do not update passwords with this route.
+ *
+ * @param {User}
+ */
+exports.updateUser = updateOne(User);
 
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    error: 'Undefined route'
-  });
-};
+/**
+ * @param {User}
+ */
+exports.deleteUser = deleteOne(User);

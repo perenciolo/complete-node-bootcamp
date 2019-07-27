@@ -52,9 +52,11 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')));
 const API_VERSION = '/api/v1';
 const toursRouter = require('./routes/tour.routes');
 const usersRouter = require('./routes/user.routes');
+const reviewsRouter = require('./routes/review.routes');
 //Routes middleware.
 app.use(`${API_VERSION}/tours`, toursRouter);
 app.use(`${API_VERSION}/users`, usersRouter);
+app.use(`${API_VERSION}/reviews`, reviewsRouter);
 // Default route.
 app.all('*', (req, res, next) => {
   // Forward the error.

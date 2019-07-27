@@ -1,10 +1,10 @@
 const express = require('express');
 
 const {
-  createUser,
   deleteMe,
   deleteUser,
   getAllUsers,
+  getMe,
   getUser,
   updateUser,
   updateMe
@@ -13,6 +13,7 @@ const {
   authProtect,
   forgotPassword,
   resetPassword,
+  restrictTo,
   signin,
   signup,
   updatePassword
@@ -23,19 +24,21 @@ const router = express.Router();
 
 router.post('/signin', signin);
 router.post('/signup', signup);
-
 router.post('/forgot-password', forgotPassword);
 router.patch('/reset-password/:id', resetPassword);
 
-router.patch('/update-password/:token', authProtect, updatePassword);
+// Protect all routes below this point.
+router.use(authProtect);
 
-router.patch('/updateme', authProtect, updateMe);
-router.delete('/deleteme', authProtect, deleteMe);
+router.patch('/update-password/:token', updatePassword);
+router.get('/me', getMe, getUser);
+router.patch('/updateme', updateMe);
+router.delete('/deleteme', deleteMe);
 
-router
-  .route('/')
-  .get(getAllUsers)
-  .post(createUser);
+// Restrict to administrators all routes below this point.
+router.use(restrictTo('admin'));
+
+router.route('/').get(getAllUsers);
 
 router
   .route('/:id')
